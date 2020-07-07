@@ -1,0 +1,357 @@
+﻿@model eCommerce_Inefavel.Models.ProdutosModel
+
+@{
+    ViewData["Title"] = "Detalhe";
+
+    ProdutosModel produtosModel = new ProdutosModel();
+}
+<div style="padding-top: 50px;">
+
+    <a class="CaminhoProduto" href="/Produtos">Início<a style="font-size: 14px"> / @Model.Titulo.ToUpper()</a></a>
+
+    <main style="flex: 1; display: flex; flex-direction: row;">
+
+        @*//SESSÃO - IMAGEM DO PRODUTO*@
+        <section class="imagemProduto">
+            <div>
+                <img src="~/produtos_img/@Model.ImagePath"
+                     alt="Produto"
+                     width="450" height="450"
+                     style="align-self: center;"
+                     asp-append-version="true" />
+            </div>
+        </section>
+
+        @*//SESSÃO - INFORMAÇÕES DO PRODUTO*@
+        <section class="informacoes">
+
+            @*//Div do Nome do Produto*@
+            <div>
+                <h1 class="produto-titulo text-uppercase">
+                    @Html.DisplayFor(model => model.Titulo)
+                </h1>
+            </div>
+
+            @*//Div do Valor do Produto*@
+            <div style="padding-top: 15px">
+                <h1 class="produt-valor">
+                    <a class="por-valor">POR</a> R$ @Html.DisplayFor(model => model.Valor)
+                </h1>
+            </div>
+
+            @*//Cor / Tamanhos / Quantidade*@
+            <div class="opcoes-item">
+                <div class="opcoes-item-inputs">
+
+                    @*//Radio-box para cores da camisa*@
+                    @*<section>
+                            <div style="padding-top: 10px" class="select-titulo">
+                                Cor
+                            </div>
+                            <div style="padding-top: 5px;">
+                                <input type="radio" id="ritemb" name="ritem" value="ropt2">
+                                <label for="ritemb">Preto</label>
+
+                                <input type="radio" id="ritemb" name="ritem" value="ropt2">
+                                <label for="ritemb">Branco</label>
+                            </div>
+                        </section>*@
+
+                    <span style="font-size: 12px">Código do Produto: @Model.Id</span>
+
+                    @*//Parte de selecionar o Tamanho do Produto*@
+                    <div>
+                        <div class="select-titulo">
+                            Selecione a opção de <a style="color:#646464; font-weight: 500;">Tamanho</a>
+                            <div class="opcoes-select">
+                                <select class="select-tamanho">
+                                    <option disabled selected>Selecione...</option>
+                                    <option value="P">P</option>
+                                    <option value="M">M</option>
+                                    <option value="G">G</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*//Fazer a lógica para divisão de valores*@
+                    <div class="todas-parcelas">
+
+                        <img class="icone-cartao" src="~/img/icone-cartao.svg" alt="icone-cartao" />
+
+                        <div class="abriga-parcelas">
+                            <div class="parcelas-abrigadas">
+                                <span class="preco-parcela">
+                                    até
+                                    <strong style="color: rgb(56, 56, 56);">12x</strong>
+
+                                    de
+                                    <strong style="color: rgb(56, 56, 56);">R$ @ViewBag.precoP</strong>
+
+                                    <span>sem juros</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="desconto-a-vista" style="color: rgb(30, 168, 52);">
+                        <img class="icone-avista" src="~/img/pgto-avista-cartao.svg" alt="icone-pgto-a-vista" />
+
+                        <div class="abriga-precoavista">
+                            <div class="preco-avista">
+                                <strong style="color: rgb(30, 168, 52);">R$ @ViewBag.precoA</strong>
+
+                                <span>à vista</span>
+                            </div>
+
+                            <div class="preco-economiza">
+                                <span>Economize: <strong>R$ @ViewBag.precoD</strong></span>
+                            </div>
+                        </div>
+                    </span>
+
+                    @*//Parte de escolher a Quantidade do Produto*@
+                    <div>
+                        <div class="quantidade-titulo">
+                            Quantidade
+                            <div class="opcoes-select">
+                                <input type="number" class="input-qnt-items" value="1" min="1" max="10"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @*//Botão p/ adicionar ao carrinho*@
+            <div class="div-btnAdd">
+                <a asp-controller="Carrinho" asp-action="addCarrinho" asp-route-id="@Model.Id"
+                   class="btnAddCarrinho btn">
+                    <i style="margin-right: 15px" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Adicionar ao Carrinho
+                </a>
+            </div>
+        </section>
+    </main>
+</div>
+
+<style>
+    .preco-economiza {
+        color: #646464;
+        font-size: 14px;
+    }
+
+    .preco-avista {
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .abriga-precoavista {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .desconto-a-vista {
+        font-size: 16px;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .icone-avista {
+        width: 42px;
+        height: 42px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    .icone-cartao {
+        width: 42px;
+        height: 42px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    .preco-parcela {
+        font-size: 16px;
+    }
+
+    .abriga-parcelas {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .todas-parcelas {
+        margin-top: 16px;
+    }
+
+    .por-valor {
+        font-size: 25px;
+        font-weight: 300;
+        color: #646464;
+    }
+
+    .botao-ircarrinho {
+        margin-top: 210%;
+        background-color: #00A9BE;
+        color: #fff;
+        width: 220px;
+        height: 50px;
+        font-size: 25px;
+        border: 0;
+    }
+
+    .CaminhoProduto {
+        color: #000;
+    }
+
+    .select-tamanho {
+        width: 315px;
+        height: 35px;
+        color: #000;
+        padding-left: 20px;
+    }
+
+    .input-qnt-items {
+        width: 85px;
+        height: 35px;
+        padding-left: 15px;
+    }
+
+    .radio-item {
+        display: inline-block;
+        position: relative;
+        padding: 0 6px;
+        margin: 10px 0 0;
+    }
+
+        .radio-item input[type='radio'] {
+            display: none;
+        }
+
+        .radio-item label {
+            color: #666;
+            font-weight: normal;
+        }
+
+            .radio-item label:before {
+                content: " ";
+                display: inline-block;
+                position: relative;
+                top: 5px;
+                margin: 0 5px 0 0;
+                width: 20px;
+                height: 20px;
+                border-radius: 11px;
+                border: 2px solid #004c97;
+                background-color: transparent;
+            }
+
+        .radio-item input[type=radio]:checked + label:after {
+            border-radius: 11px;
+            width: 12px;
+            height: 12px;
+            position: absolute;
+            top: 9px;
+            left: 10px;
+            content: " ";
+            display: block;
+            background: #004c97;
+        }
+
+    .imagemProduto:first-child {
+        width: 50%;
+        border-top: 1px groove;
+        text-align: center;
+        height: 500px;
+        padding-top: 50px;
+    }
+
+    .informacoes:last-child {
+        padding-left: 40px;
+    }
+
+    .produto-titulo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #646464;
+    }
+
+    .produt-valor {
+        font-size: 30px !important;
+        font-weight: 700;
+        display: block;
+        padding-top: 23px;
+    }
+
+    .opcoes-item {
+        position: relative;
+        z-index: 2;
+    }
+
+    .opcoes-item-inputs {
+        margin-bottom: 32px;
+    }
+
+    .select-titulo {
+        color: #666666;
+        padding-top: 20px;
+    }
+
+    .opcoes-select {
+        width: 50px;
+        height: 50px;
+        padding-top: 10px;
+    }
+
+    .quantidade-titulo {
+        padding-top: 10px;
+        opacity: .75;
+        vertical-align: middle;
+        line-height: 1;
+        margin-bottom: 0.8em;
+        display: block;
+    }
+
+    .quantidade-input {
+        display: inline-block;
+        position: relative;
+        width: 5.45em;
+    }
+
+    .btnAddCarrinho {
+        border-width: 0;
+        color: white;
+        background-color: rgb(69, 237, 134);
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .div-btnAdd {
+        position: relative;
+    }
+
+    .div-carrinho-principal {
+        flex: 1;
+        position: absolute;
+        display: flex;
+        flex-direction: row-reverse;
+        padding-left: 63%;
+    }
+
+    .div-carrinho {
+        background-color: #eee;
+        width: 300px;
+        height: 820px;
+        text-align: center;
+        border: 1px solid;
+    }
+
+    .txt-carrinho {
+        background-color: #000;
+        color: #fff;
+        height: 70px;
+        padding-top: 8px;
+    }
+</style>

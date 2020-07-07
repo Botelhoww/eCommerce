@@ -1,0 +1,306 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOJA | BOTS STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@1,700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Manrope:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    @*//Fonte para o Titulo da Loja*@
+    <link href="https://fonts.googleapis.com/css2?family=Revalia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+
+    @RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body style="background: #eee">
+    <header>
+        <nav style="background-color: #fff" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom">
+            <div class="div-nome-loja">
+                <a asp-controller="Produtos" asp-action="Index">
+                    <h1 class="h1-nome-loja">BOTS STORE</h1>
+                </a>
+
+                <div id="div-SearchBar" class="has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Busque por produtos">
+                </div>
+            </div>
+
+            <div style="padding-right: 50px;" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    @*//Icone do Carrinho*@
+                    <li class="nmr-itens-carrinho" id="icone-carrinho">
+                        <a href="@Url.ActionLink("Index","Carrinho")">
+                            <img class="icone-carrinho" src="~/img/icone-carrinho-de-compras.svg" alt="icone-cartao" />
+                        </a>
+
+                        @*//Lógica para aparecer qnts itens tem no carrinho*@
+                        <div class="borda-qtd-itens">
+                            <p class="qtd-itens-carrinho">
+                                @this.Context.Session.GetString("qtdItens");
+                            </p>
+                        </div>
+                    </li>
+
+                    @*//Botão para logar com seu usuario e senha*@
+                    <li style="flex: 1; display: flex; flex-direction: row-reverse;" class="nav-item">
+                        @*//Nome do Usuario logado pego pela sessão*@
+                        <p id="nomeUsuario" style="color: black; padding-top: 15px; margin-right: 10px;">Olá, @Context.Session.GetString("NomeUsuario")</p>
+                        @*//Imagem do usuario*@
+                        <img width="40" height="40" src="~/img/user-icon.png" style="align-self: center; margin-right: 10px;" />
+                    </li>
+
+                    @*//Botão para finalizar sessão/sair do seu login*@
+                    <li class="nav-item">
+                        <a id="btnLogout" class="nav-link"
+                           asp-area="" asp-controller="Login" asp-action="Logout">Sair</a>
+                    </li>
+
+                    @*//Parte de entrar ou cadastrar-se*@
+                    <a id="btnEntrar" class="nav-link"
+                       asp-area="" asp-controller="Login" asp-action="Index">
+                        Entrar ou
+                        <span class="span-cadastrar">Cadastrar</span>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+
+        @*//Segunda nav abaixo da barra de pesquisa, carrinho, nome etc... e em cima dos produtos em destaque*@
+        <nav style="background-color: #eee" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+            <div style="background-color: #eee" class="container">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li id="barra-opcoes" class="nav-item">
+                            <a id="abas" class="nav-link" asp-area="">VESTUÁRIO</a><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </li>
+                        <li id="barra-opcoes" class="nav-item">
+                            <a id="abas" class="nav-link" asp-area="">CALÇADOS</a><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </li>
+                        <li id="barra-opcoes" class="nav-item">
+                            <a id="abas" class="nav-link" asp-area="">ACESSÓRIOS</a><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </li>
+                        <li id="abaAdmin" class="nav-item">
+                            <a style="color: brown;" id="abas" class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Área da Administração</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="footer">
+            <a style="color: #000;" class="aFooter">&copy;2020 - Direitos Reservados ao Bots</a>
+        </div>
+    </footer>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <script src="~/js/jquery.mask.js"></script>
+</body>
+</html>
+
+<style>
+    #div-SearchBar {
+        height: 45px;
+        width: 375px;
+        margin-left: 140px;
+    }
+
+    .has-search .form-control {
+        padding-left: 4.375rem;
+    }
+
+    .has-search .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 4.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+
+    ::-webkit-input-placeholder {
+        font-family: 'Roboto', sans-serif;
+        opacity: 0.5;
+    }
+
+    .h1-nome-loja {
+        font-family: 'Revalia', cursive;
+        font-size: 24px;
+        margin-left: 40px;
+        align-self: center;
+    }
+
+    .div-nome-loja a {
+        font-family: 'Revalia', cursive;
+        font-size: 24px;
+        margin-left: 40px;
+        align-self: center;
+        color: black;
+        text-decoration: none;
+    }
+
+    .div-nome-loja i {
+        position: absolute;
+        opacity: 0.5;
+    }
+
+    .div-nome-loja {
+        padding-top: 5px;
+        padding-left: 25px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .fa-chevron-down {
+        padding-left: 5px;
+    }
+
+    #abaAdmin {
+        display: flex;
+        align-items: center;
+        padding-left: 2%;
+    }
+
+    #barra-opcoes {
+        display: flex;
+        align-items: center;
+        width: 15%;
+        color: #000;
+    }
+
+    .borda-qtd-itens {
+        background: #00af00;
+        border-radius: 12px;
+        width: 25px;
+        color: white;
+        text-align: center;
+        height: 25px;
+        margin-left: 2px;
+        margin-top: 2px;
+    }
+
+    .nmr-itens-carrinho {
+        display: flex;
+        padding-left: 20px;
+    }
+
+    .icone-carrinho {
+        height: 27px;
+    }
+
+    .span-cadastrar {
+        font-weight: 700;
+        display: block;
+    }
+
+    .footer {
+        background-color: #fff;
+        max-width: 100%;
+        min-width: 30%;
+        flex: 1;
+        text-align: center;
+    }
+
+    .aFooter {
+        display: flex;
+        justify-content: center
+    }
+
+    #abas {
+        padding-top: 15px;
+        color: #000;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    li {
+        align-self: center;
+    }
+
+    #btnEntrar {
+        color: #404040;
+        margin-right: 30%;
+    }
+
+    #btnLogout {
+        color: black;
+        font-family: 'Poppins', sans-serif;
+        padding-left: 70px;
+        padding-right: 30px;
+    }
+</style>
+
+@{
+    //Vê se a sessão está preenchida,
+    // == true irá esconder os botões 'Entrar' e 'Registrar-se'
+    // == false irá esconder o botão 'Logout' e aparecer com os botões 'Entrar' e 'Registrar-se'
+    this.Context.Session.GetString("isFiltered");
+    if (this.Context.Session.GetString("isFiltered") != null)
+    {
+        <script>
+            document.getElementById("btnEntrar").style.display = "none";
+            document.getElementById("btnReg").style.display = "none";
+        </script>
+    }
+    else
+    {
+        <script>
+            document.getElementById("btnLogout").style.display = "none";
+            document.getElementById("nomeUsuario").style.display = "none";
+        </script>
+    };
+
+    //Libera permissões e abas só pra quem é ADMIN
+    if (this.Context.Session.GetString("isAdmin") != null)
+    {
+        <script>
+            document.getElementById("abaAdmin").style.display = "block";
+            document.getElementById("btnLogout").style.display = "block";
+            document.getElementById("nomeUsuario").style.display = "block";
+            document.getElementById("btnEntrar").style.display = "none";
+            document.getElementById("btnReg").style.display = "none";
+
+        </script>
+    }
+    else
+    {
+        <script>
+            document.getElementById("abaAdmin").style.display = "none";
+        </script>
+    }
+
+    //Só aparece o icone do carrinho qnd add algo no mesmo
+    if (this.Context.Session.GetString("cart") != null)
+    {
+        <script>
+            document.getElementById("icone-carrinho").style.display = "";
+        </script>
+    }
+    else
+    {
+        <script>
+            document.getElementById("icone-carrinho").style.display = "none";
+        </script>
+    }
+}

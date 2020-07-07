@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<eCommerce_Inefavel.Models.ProdutosModel>
+@*<img style="margin-left: 40%" src="~/img/logoinefavel.png" alt="Produto" width="370" height="408">*@
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+</head>
+
+<div class="div-ultimos-lancamentos">
+    <p class="titulo-ultimos-lancamentos"> Últimos Lançamentos </p>
+</div>
+
+<div class="Cards">
+    @foreach (var item in ViewBag.produtos)
+    {
+        <a style="text-decoration: none; color: #000" href="@Url.Action("Detalhe", "Produtos", new { id = item.Id })">
+
+            <div class="Card">
+                <img src="~/produtos_img/@item.ImagePath"
+                     alt="Produto"
+                     width="200" height="200"
+                     style="align-self: center;"
+                     asp-append-version="true" />
+
+                <div class="Title">
+                    <span class="titulo-uppercase">@item.Titulo</span>
+                </div>
+
+                <div class="Valor" style="text-align: center">
+                    <span>R$ @item.Valor</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<div class="span12 banner tarja">
+    <a href="#" target="_self">
+        <img src="~/img/infos.png" alt="Tarjaa">
+    </a>
+</div>
+
+<div style="padding-top: 40px;" class="Cards1">
+    @foreach (var item in ViewBag.produtos2)
+    {
+        <a style="text-decoration: none; color: #000" href="@Url.Action("Detalhe", "Produtos", new { id = item.Id })">
+
+            <div class="Card">
+                <img src="~/produtos_img/@item.ImagePath"
+                     alt="Produto"
+                     width="200" height="200"
+                     style="align-self: center;"
+                     asp-append-version="true" />
+
+                <div class="Title">
+                    <span class="titulo-uppercase">@item.Titulo</span>
+                </div>
+
+                <div class="Valor1" style="text-align: center">
+                    <span>R$ @item.Valor</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<style>
+    .div-ultimos-lancamentos {
+        background: black;
+        color: white;
+        height: 40px;
+    }
+
+    .titulo-ultimos-lancamentos {
+        font-size: 25px;
+        font-weight: 700;
+        padding-left: 20px;
+        padding-top: 3px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .tarja * {
+        color: #fff;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding-top: 3px;
+    }
+
+    .titulo-uppercase {
+        text-transform: uppercase;
+    }
+
+    .Cards1 {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        background: #eee;
+    }
+
+    .Cards {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        background: #fff;
+    }
+
+    .Card {
+        overflow: hidden;
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+        min-width: 300px;
+    }
+
+        .Card .Title {
+            padding: 5px 0px;
+            display: flex;
+            justify-content: center;
+            max-width: 300px;
+            text-align-last: center;
+            text-align: center;
+            color: #484848;
+            font-weight: 600;
+        }
+
+        .Card .Content {
+            flex: 1;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .Card .Valor {
+            flex: 1;
+            color: #6d6d6d;
+            padding: 20px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .Card .Valor1 {
+            flex: 1;
+            color: #6d6d6d;
+            padding: 20px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+</style>
+
+@{
+    if (this.Context.Session.GetString("isFiltered") != null)
+    {
+        <script>
+            document.getElementById("btnEntrar").style.display = "none";
+            document.getElementById("btnReg").style.display = "none";
+        </script>
+    }
+    else
+    {
+        <script>
+            document.getElementById("btnLogout").style.display = "none";
+            document.getElementById("nomeUsuario").style.display = "none";
+        </script>
+    };
+}

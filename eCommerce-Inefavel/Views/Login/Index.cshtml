@@ -1,0 +1,93 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model eCommerce_Inefavel.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Revalia&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    @*<img style="margin-left: 40%" src="~/img/logoinefavel.png" alt="Produto" width="370" height="408">*@
+    <a asp-controller="Produtos" asp-action="Index">
+        <h1 class="titulo-loja">BOTS STORE</h1>
+    </a>
+
+    <div class="row divpri">
+        <div class="col-md-4">
+
+            @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
+            {
+                <div asp-validation-summary="All" class="text-danger"></div>
+                @*--- Email ---*@
+                <div style="padding-top: 30%;" class="form-group">
+                    <label asp-for="Email" class="col-md-4 control-label"></label>
+                    <div>
+                        <input asp-for="Email" placeholder="Digite seu email..." class="form-control" />
+                        <span asp-validation-for="Email" class="input-group-addon"></span>
+                    </div>
+                </div>
+                @*--- Senha ---*@
+                <div class="form-group">
+                    <label asp-for="Senha" class="col-md-4 control-label"></label>
+                    <div>
+                        <input type="password" asp-for="Senha" placeholder="Digite sua senha..." class="form-control" />
+                        <span asp-validation-for="Senha" class="input-group-addon"></span>
+                    </div>
+                </div>
+                @*--- Botão para Logar ---*@
+                <div class="form-group">
+                    <button style="width: 100%;" type="submit" class="btn btn-outline-dark">Entrar</button>
+
+                    @*//Botão para se Registrar*@
+                </div>
+                <div class="nav-item">
+                    <p style="color: brown; font-size: 13px; text-align: center; padding-top: 10px;">Ainda não tem uma conta?</p>
+
+                    <a id="btnReg" class="nav-link btn btn btn-outline-danger"
+                       asp-area="" asp-controller="Registro" asp-action="Registrar">
+                        Registre-se
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
+
+<style>
+    .divpri {
+        margin-top: -5%;
+        justify-content: center;
+    }
+
+    #btnReg {
+        color: black;
+        font-size: 15px;
+        width: 100%
+    }
+
+        #btnReg:hover {
+            color: white;
+        }
+
+    .titulo-loja {
+        font-family: 'Revalia', cursive;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 35px;
+        color: black;
+        margin-top: 10%;
+    }
+</style>

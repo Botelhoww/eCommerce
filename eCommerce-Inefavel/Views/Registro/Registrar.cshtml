@@ -1,0 +1,76 @@
+﻿@model eCommerce_Inefavel.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cadastro</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Revalia&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    @*<img style="margin-left: 40%" src="~/img/logoinefavel.png" alt="Produto" width="370" height="408">*@
+    <a asp-controller="Produtos" asp-action="Index">
+        <h1 class="titulo-loja">BOTS STORE</h1>
+    </a>
+
+    <div class="row divpri">
+        <div class="col-md-4">
+            <form class="well form-horizontal" id="contact_form" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                @*--- Nome ---*@
+                <div style="padding-top: 30%;" class="form-group">
+                    <label asp-for="Nome" class="col-md-4 control-label"></label>
+                    <div>
+                        <input asp-for="Nome" placeholder="Digite seu nome..." class="form-control" />
+                        <span asp-validation-for="Nome" class="input-group-addon"></span>
+                    </div>
+                </div>
+                @*--- Email ---*@
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-4 control-label"></label>
+                    <div>
+                        <input asp-for="Email" placeholder="Digite seu email..." class="form-control" />
+                        <span asp-validation-for="Email" class="input-group-addon"></span>
+                    </div>
+                </div>
+                @*--- Senha ---*@
+                <div class="form-group">
+                    <label asp-for="Senha" class="col-md-4 control-label"></label>
+                    <div>
+                        <input type="password" asp-for="Senha" placeholder="Digite sua senha..." class="form-control" />
+                        <span asp-validation-for="Senha" class="input-group-addon"></span>
+                    </div>
+                </div>
+                @*--- Botão Registrar ---*@
+                <div class="form-group">
+                    <button style="width: 100%" type="submit" class="btn btn-outline-success">Finalizar Registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .divpri {
+        margin-top: -5%;
+        justify-content: center;
+    }
+
+    .titulo-loja {
+        font-family: 'Revalia', cursive;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 35px;
+        color: black;
+        margin-top: 10%;
+    }
+</style>

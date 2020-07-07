@@ -1,0 +1,145 @@
+﻿@model IEnumerable<eCommerce_Inefavel.Models.ProdutosModel>
+
+@{
+    ViewData["Title"] = "ListaDeProdutos";
+}
+
+<span style="font-size: 25px; font-weight: 600;">Lista dos Produtos</span>
+<span class="span-aviso">*produtos ativos na loja*</span>
+
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body style="background-color: #99B898;">
+
+    <div style="display: flex;" class="has-search2">
+        <a class="btn btn-outline-light" asp-controller="Admin" asp-action="CadastrarProduto">Cadastrar Novo Produto</a>
+
+        <span class="fa fa-search form-control-feedback"></span>
+        <input id="myInput" type="text" class="form-control" placeholder="Pesquise por Código ou Nome do Produto...">
+    </div>
+
+    <table style="background: white;" class="table">
+        <thead>
+            <tr>
+                <th style="border-color: #355c7d;">
+                    Código do Produto
+                </th>
+                <th style="border-color: #355c7d;">
+                    Imagem do Produto
+                </th>
+                <th style="border-color: #355c7d;">
+                    Titulo do Produto
+                </th>
+                <th style="border-color: #355c7d;">
+                    Preço
+                </th>
+                <th style="border-color: #355c7d;">
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-uppercase" style="padding-top: 5%;">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Detalhe", "Produtos", new { id = item.Id })">
+                            <img src="~/produtos_img/@item.ImagePath"
+                                 alt="Produto"
+                                 width="120" height="120"
+                                 style="align-self: center;"
+                                 asp-append-version="true" />
+                        </a>
+                    </td>
+                    <td class="text-uppercase" style="padding-top: 5%;">
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td style="padding-top: 5%;">
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td style="padding-top: 5%;">
+                        <a class="icone-editar" href="@Url.ActionLink("EditarProduto","Admin", new { id = item.Id })"><i class="fas fa-edit"></i></a>
+                        <span style="color: #c5c5c5">|</span>
+                        <a class="icone-remover" href="@Url.ActionLink("RemoverProduto","Admin", new { id = item.Id })"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+<style>
+    td {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    th {
+        background: #355C7D;
+        color: white;
+        text-align: center;
+    }
+
+    .span-aviso {
+        display: flex;
+        font-size: 14px;
+        color: gray;
+        justify-content: flex-end;
+    }
+
+    .icone-editar {
+        color: cadetblue;
+    }
+
+    .icone-remover {
+        color: tomato;
+    }
+
+    .icone-editar:hover {
+        color: #337375;
+    }
+
+    .icone-remover:hover {
+        color: #e24428;
+    }
+
+    .has-search2 .form-control {
+        padding-left: 55px;
+        width: 40%;
+        margin-left: 468px;
+    }
+
+    .has-search2 .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 4.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+        padding-left: 36%;
+    }
+
+    ::-webkit-input-placeholder {
+        font-family: 'Roboto', sans-serif;
+        opacity: 0.5;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

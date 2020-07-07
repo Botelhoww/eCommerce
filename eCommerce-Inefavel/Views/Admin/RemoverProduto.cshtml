@@ -1,0 +1,37 @@
+﻿@model eCommerce_Inefavel.Models.ProdutosModel
+
+@{
+    ViewData["Title"] = "RemoverProduto";
+}
+
+<h1>Página de Remoção para o Produto </h1>@Model.Titulo
+
+<h3>Confirme se deseja deletar o item.</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+    </dl>
+    
+    <form asp-action="RemoverProduto">
+        <input type="submit" value="Remover" class="btn btn-secondary" /> |
+        <a class="btn btn-danger" asp-action="ListaDeProdutos">Cancelar</a>
+    </form>
+</div>

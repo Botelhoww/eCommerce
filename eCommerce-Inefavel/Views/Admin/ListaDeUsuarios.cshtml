@@ -1,0 +1,132 @@
+﻿@model IEnumerable<eCommerce_Inefavel.Models.UsuarioModel>
+
+@{
+    ViewData["Title"] = "ListaDeUsuarios";
+}
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body style="background: #99B898;">
+
+    <span style="font-size: 25px; font-weight: 600;">Lista de Usuários</span>
+
+    <div style="display: flex;" class="has-search2">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input id="myInput" type="text" class="form-control" placeholder="Pesquise por Código ou Nome do Usuário...">
+    </div>
+
+    <table style="background: white;" class="table">
+        <thead>
+            <tr>
+                <th style="border-color: #355c7d;">
+                    Código do Usuário
+                </th>
+                <th style="border-color: #355c7d;">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th style="border-color: #355c7d;">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th style="border-color: #355c7d;">
+                    @Html.DisplayNameFor(model => model.Senha)
+                </th>
+                <th style="border-color: #355c7d;">
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th style="border-color: #355c7d;">
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Senha)
+                    </td>
+                    <td style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td style="text-align: center;">
+                        <a class="icone-editar" href="@Url.ActionLink("EditarUsuario","Admin", new { id = item.Id })"><i class="fas fa-user-edit"></i></a>
+                        <span style="color: #c5c5c5">|</span>
+                        <a class="icone-remover" href="@Url.ActionLink("RemoverUsuario","Admin", new { id = item.Id })"><i class="fas fa-user-times"></i></a>
+                        <span style="color: #c5c5c5">|</span>
+                        <a class="icone-detalhes" href="@Url.ActionLink("DetalhesUsuario","Admin", new { id = item.Id })"><i class="fas fa-user-cog"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<style>
+    th {
+        background: #355C7D;
+        color: white;
+        text-align: center;
+    }
+
+    .icone-editar {
+        color: cadetblue;
+    }
+
+    .icone-remover {
+        color: tomato;
+    }
+
+    .icone-detalhes {
+        color: #4d6dc5;
+    }
+
+    .icone-editar:hover {
+        color: #337375;
+    }
+
+    .icone-remover:hover {
+        color: #e24428;
+    }
+
+    .icone-detalhes:hover {
+        color: #2852c7;
+    }
+
+    .has-search2 .form-control {
+        padding-left: 85px;
+        width: 40%;
+    }
+
+    .has-search2 .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 4.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+</style>

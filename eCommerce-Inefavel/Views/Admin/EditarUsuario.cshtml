@@ -1,0 +1,75 @@
+﻿@model eCommerce_Inefavel.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "EditarUsuario";
+}
+
+<h2 class="nome-usuario-h2">Editando o Usuário: <span class="nome-usuario-span">@Model.Nome</span></h2>
+
+<hr />
+<div class="row div-edicao">
+    <div class="col-md-4">
+        <form style="width: 446px;" asp-action="EditarUsuario">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Alterar Nome: </label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Alterar E-mail:</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Senha do Usuário</label>
+                <br />
+                <a style="color: red;" class="aviso-senha">Não recomendado mexer nesse campo em HIPÓTESE alguma!</a>
+                <input asp-for="Senha" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fornecer/Retirar Permissões:</label>
+                <input asp-for="Role" class="form-control" />
+                <span class="span-aviso">Escreva "Admin" para dar permissão</span>
+                <span class="span-aviso">Deixe o campo vazio para não dar permissão</span>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group botoes-acoes">
+                <input type="submit" value="Salvar Edição" class="btn btn-secondary" /> |
+                <a class="btn btn-danger" asp-action="ListaDeUsuarios">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .span-aviso {
+        display: flex;
+        font-size: 12px;
+        color: gray;
+    }
+    .aviso-senha {
+        font-size: 12px;
+        display: flex;
+    }
+    .nome-usuario-h2 {
+        font-size: 20px;
+        display: flex;
+        flex: 1;
+        justify-content: center;
+    }
+    .nome-usuario-span {
+        color: cornflowerblue;
+        padding-left: 5px;
+    }
+    .div-edicao {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
+    }
+    .botoes-acoes{
+        text-align: end;
+    }
+</style>
