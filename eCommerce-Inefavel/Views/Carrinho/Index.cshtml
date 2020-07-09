@@ -23,7 +23,8 @@
                 <div class="BasketItem">
                     <div class="BasketItem-productContainer">
                         <div class="BasketItemProduct">
-                            <a class="BasketItemProduct-image" href="@Url.ActionLink("Detalhe", "Produtos", new { id = item.Id })">
+                            @*<a class="BasketItemProduct-image" href="@Url.ActionLink("Detalhe", "Produtos", new { id = item.Id })">*@
+                            <a class="BasketItemProduct-image">
                                 <img src="~/produtos_img/@item.Produto.ImagePath"
                                      alt="Produto"
                                      width="190"
@@ -59,10 +60,10 @@
                     Subtotal (0 itens)
                 </span>
                 <span style="display: none" id="subtotal1" class="BasketPriceBox-prices-title preco-total">
-                    Subtotal (@this.Context.Session.GetString("qtdItens"); item)
+                    Subtotal (@this.Context.Session.GetString("qtdItens") item)
                 </span>
                 <span style="display: none" id="subtotal2" class="BasketPriceBox-prices-title preco-total">
-                    Subtotal (@this.Context.Session.GetString("qtdItens"); itens)
+                    Subtotal (@this.Context.Session.GetString("qtdItens") itens)
                 </span>
                 <div class="BasketPriceBox-prices-values">
                     <div>
@@ -73,8 +74,11 @@
         </div>
         <div class="BasketContinue">
             <div class="BasketContinue-actions">
-                <a class="BasketContinue-buyMore" asp-controller="produtos" asp-action="index">Comprar mais produtos</a>
-                <button class="BasketContinue-button">Finalizar Compra</button>
+                <div style="background: #e4e4e4; align-self: center; padding-left: 10px;">
+                    <i style="align-self: center" class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                    <a class="BasketContinue-buyMore" asp-controller="produtos" asp-action="index">Comprar mais produtos</a>
+                </div>
+                <a class="BasketContinue-button btn" asp-controller="checkout" asp-action="index">Checkout</a>
             </div>
         </div>
     </div>
@@ -217,7 +221,6 @@
     }
 
     .BasketPriceBox-price {
-        /*display:flex;*/
         margin-left: 80%;
         font-size: 20px;
         border-top: 2px solid;
@@ -238,22 +241,29 @@
     }
 
     .BasketContinue-actions {
-        margin-right: 0;
         line-height: 40px;
-        margin-left: 60%;
         padding-top: 10px;
         font-weight: 500;
+        display: flex;
+        justify-content: space-between;
     }
 
     .BasketContinue-buyMore {
+        color: #000;
+        text-decoration: none;
+        display: inline-block;
         margin-right: 20px;
-        font-size: 14px;
-        text-align: right;
+        font-weight: 400;
+        padding-left: 5px;
     }
 
     .BasketContinue-button {
-        width: 224px;
         font-weight: 500;
+        border-width: 0;
+        color: white;
+        background-color: rgb(140, 106, 106);
+        font-size: 20px;
+        width: 20%;
     }
 
         .BasketContinue-button:hover, .BasketContinue-button:active {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eCommerce_Inefavel.Helpers;
+﻿using eCommerce_Inefavel.Helpers;
 using eCommerce_Inefavel.Models;
 using eCommerce_Inefavel.Models.Contexto;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace eCommerce_Inefavel.Controllers
 {
@@ -21,11 +18,18 @@ namespace eCommerce_Inefavel.Controllers
         }
         public IActionResult Index()
         {
+            //Pega da sessão 'cart' o item que foi adicioando recentemente
             var cart = HttpContext.Session.GetObjectFromJson<List<CarrinhoModel>>("cart");
 
+            //Passa o Objeto com o produto adicionado ao carrinho para a ViewBag
             ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Produto.Valor);
 
+            //Faz a soma de todos os produtos adicionados ao carrinho
+            var valorTotal = cart.Sum(item => item.Produto.Valor);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "valorTotal", valorTotal);
+            ViewBag.total = valorTotal;
+
+            //Seta na sessão 'qtdItens' quantos itens estão dentro do carrinho
             var contaItens = cart.Count();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "qtdItens", contaItens);
 
@@ -38,6 +42,7 @@ namespace eCommerce_Inefavel.Controllers
             {
                 List<CarrinhoModel> cart = new List<CarrinhoModel>();
                 cart.Add(new CarrinhoModel { Produto = _contexto.Produtos.Find(Id) });
+                //Passa para a sessão 'cart' o item adicionado
                 HttpContext.Session.SetObjectAsJson("cart", cart);
             }
             else
@@ -49,7 +54,7 @@ namespace eCommerce_Inefavel.Controllers
             return RedirectToAction("Index");
         }
 
-        //n ta funcionando
+        //Remove item do carrinho
         public IActionResult Remove(int Id)
         {
             List<CarrinhoModel> cart = SessionHelper.GetObjectFromJson<List<CarrinhoModel>>(HttpContext.Session, "cart");

@@ -4,34 +4,81 @@
     ViewData["Title"] = "RemoverProduto";
 }
 
-<h1>Página de Remoção para o Produto </h1>@Model.Titulo
+<body style="background-color: #99B898;">
+    <div style="background: white; display: block" class="row">
+        <div id="titulo" class="card-header text-uppercase text-white">
+            <h4>Tela de Remoção para o Produto / <a style="color: #99B898">@Model.Titulo</a> / </h4>
+        </div>
 
-<h3>Confirme se deseja deletar o item.</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-    </dl>
-    
-    <form asp-action="RemoverProduto">
-        <input type="submit" value="Remover" class="btn btn-secondary" /> |
-        <a class="btn btn-danger" asp-action="ListaDeProdutos">Cancelar</a>
-    </form>
-</div>
+        <div style="padding-top: 10px;">
+            <span class="confirmar-remocao">Confirme se deseja deletar o item.</span>
+        </div>
+
+        <div style="flex: 1; height: 445px;">
+            <hr />
+            <div class="div-produto">
+                <div class="col-sm-10">
+                    <div>
+                        <img src="~/produtos_img/@Model.ImagePath"
+                             alt="@Model.Titulo"
+                             width="350" height="350"
+                             style="align-self: center;"
+                             asp-append-version="true" />
+                    </div>
+                </div>
+
+                <div class="col-sm-10 text-uppercase">
+                    @Html.DisplayFor(model => model.Titulo)
+                </div>
+
+                <div class="col-sm-10">
+                    @Html.DisplayFor(model => model.Valor)
+                </div>
+            </div>
+
+            <div class="div-id-ativo">
+                <div class="col-sm-2">
+                    Id do Produto:
+                </div>
+                <div class="col-sm-10">
+                    <p style="font-weight: 500;">@Html.DisplayFor(model => model.Id)</p>
+                </div>
+
+                <div class="col-sm-2">
+                    <strong style="color: green;"> Produto Ativo! </strong>
+                </div>
+            </div>
+
+            <form style="padding-top: 26%; padding-left: 5px;" asp-action="RemoverProduto">
+                <input type="submit" value="Remover" class="btn btn-secondary" /> |
+                <a class="btn btn-danger" asp-action="ListaDeProdutos">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</body>
+
+<style>
+    .confirmar-remocao {
+        padding-left: 10px;
+        color: tomato;
+        font-weight: 500;
+    }
+
+    #titulo {
+        background-color: #355C7D;
+        width: 100%;
+        text-align: center;
+    }
+
+    .div-id-ativo {
+    }
+
+    .div-produto {
+        text-align: center;
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        margin-left: 15%;
+    }
+</style>

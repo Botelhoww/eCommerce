@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eCommerce_Inefavel.Helpers;
+﻿using System.Linq;
 using eCommerce_Inefavel.Models;
 using eCommerce_Inefavel.Models.Contexto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Session;
 using Newtonsoft.Json;
 
 namespace eCommerce_Inefavel.Controllers
@@ -28,6 +23,7 @@ namespace eCommerce_Inefavel.Controllers
             return View();
         }
 
+        //Fazer algo pra quando a senha estiver incorreta...[sem ideia do que]
         [HttpPost]
         public IActionResult Authorize(UsuarioModel userModel)
         {
@@ -39,22 +35,24 @@ namespace eCommerce_Inefavel.Controllers
             {
                 //Seta o Id do usuario como sessão
                 this.session.SetString("isAdmin", JsonConvert.SerializeObject(userDetails.Role));
-                //Seta o Nome do usuario na sessão
-                this.session.SetString("NomeUsuario", JsonConvert.SerializeObject(userDetails.Nome));
+
+                //Pega o nome do usúario e adiciona à sessão 'NomeUsuario'
+                this.session.SetString("NomeUsuario", (userDetails.Nome));
 
                 return RedirectToAction("Admin", "Admin");
             }
 
-            if (userDetails == null)
+            if (userModel == null)
             {
                 return RedirectToAction("Index", userModel);
             }
+            //Entra no ELSE qnd o usuário tiver certo
             else
             {
                 //Seta o Id do usuario como sessão
                 this.session.SetString("isFiltered", JsonConvert.SerializeObject(userDetails.Id));
                 //Seta o Nome do usuario na sessão
-                this.session.SetString("NomeUsuario", JsonConvert.SerializeObject(userDetails.Nome));
+                this.session.SetString("NomeUsuario", (userDetails.Nome));
 
                 return RedirectToAction("Index", "Produtos");
             }

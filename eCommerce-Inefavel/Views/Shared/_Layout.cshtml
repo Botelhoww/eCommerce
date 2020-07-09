@@ -47,7 +47,7 @@
                         @*//Lógica para aparecer qnts itens tem no carrinho*@
                         <div class="borda-qtd-itens">
                             <p class="qtd-itens-carrinho">
-                                @this.Context.Session.GetString("qtdItens");
+                                @this.Context.Session.GetString("qtdItens")
                             </p>
                         </div>
                     </li>
@@ -55,7 +55,7 @@
                     @*//Botão para logar com seu usuario e senha*@
                     <li style="flex: 1; display: flex; flex-direction: row-reverse;" class="nav-item">
                         @*//Nome do Usuario logado pego pela sessão*@
-                        <p id="nomeUsuario" style="color: black; padding-top: 15px; margin-right: 10px;">Olá, @Context.Session.GetString("NomeUsuario")</p>
+                        <p id="nomeUsuario" style="color: black; padding-top: 15px; margin-right: 10px;">Olá, @this.Context.Session.GetString("NomeUsuario")</p>
                         @*//Imagem do usuario*@
                         <img width="40" height="40" src="~/img/user-icon.png" style="align-self: center; margin-right: 10px;" />
                     </li>
@@ -244,10 +244,9 @@
     }
 
     #btnLogout {
-        color: black;
+        color: #bb5757;
         font-family: 'Poppins', sans-serif;
         padding-left: 70px;
-        padding-right: 30px;
     }
 </style>
 

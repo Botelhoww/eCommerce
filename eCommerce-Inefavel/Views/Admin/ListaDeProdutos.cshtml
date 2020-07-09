@@ -50,7 +50,7 @@
                     <td>
                         <a href="@Url.Action("Detalhe", "Produtos", new { id = item.Id })">
                             <img src="~/produtos_img/@item.ImagePath"
-                                 alt="Produto"
+                                 alt="@item.Titulo"
                                  width="120" height="120"
                                  style="align-self: center;"
                                  asp-append-version="true" />

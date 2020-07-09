@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce_Inefavel.Helpers;
-using eCommerce_Inefavel.Models;
-using eCommerce_Inefavel.Models.Contexto;
-using Microsoft.AspNetCore.Http;
+﻿using eCommerce_Inefavel.Models.Contexto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace eCommerce_Inefavel.Controllers
 {

@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model eCommerce_Inefavel.Models.CheckoutModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="div-tudo">
+    <!--COMEÇO DA PARTE DE ENVIO DO PRODUTO-->
+    <div class="div-infos-usuario">
+        <div style="padding-top: 10px;">
+            <a class="caminhos" id="1">1. Informações</a>
+            <a class="caminhos1" id="2">2. Entrega</a>
+            <a class="caminhos1" id="3">3. Pagamento</a>
+            <a class="caminhos1" id="4">4. Confirmação</a>
+        </div>
+        <div style="padding-top: 15px;" class="form-group">
+            <div class="col-md-6">
+                <h4 style="font-weight: 300; font-size: 29px;">Detalhes</h4>
+                <small>Se você já tiver uma conta, <a asp-controller="Login" asp-action="Index">entre aqui</a></small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="padding-top: 1%;" class="input-infos">
+                <p class="label-input">Primeiro Nome:</p>
+                <input asp-for="PrimeiroNome" placeholder="Digite seu primeiro nome..." type="text" name="PrimeiroNome" class="form-control" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">Sobrenome:</p>
+                <input asp-for="Sobrenome" placeholder="Digite seu sobrenome completo..." type="text" name="Sobrenome" class="form-control" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">Endereço:</p>
+                <input asp-for="PrimeiroEndereco" placeholder="Ex: Rua Itapeva, 1130" type="text" name="PrimeiroEndereco" class="form-control" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">Cidade:</p>
+                <input asp-for="Cidade" placeholder="Ex: São Paulo" type="text" name="Cidade" class="form-control" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">Estado:</p>
+                <input asp-for="Estado" placeholder="Ex: SP" maxlength="2" type="text" name="Estado" class="form-control" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">CEP:</p>
+                <input asp-for="CEP" placeholder="Ex: 00000-000" type="text" name="CEP" class="form-control" value="" data-mask="00000-000" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">Celular:</p>
+                <input placeholder="Ex: (00) 00000-0000" asp-for="NumCelular" type="text" name="NumCelular" class="form-control" value="" data-mask="(00) 00000-0000" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-infos">
+                <p class="label-input">E-mail:</p>
+                <input placeholder="Ex: fulanodetal@gmail.com.br" type="text" name="Email" class="form-control" value="" />
+            </div>
+        </div>
+
+        @*//Botão para finalizar compra*@
+        <div style="display: flex; margin-left: 22px" class="form-group">
+            <a style="color: #000; text-decoration: underline; align-self: center;" href="/Carrinho">Voltar ao Carrinho</a>
+            <input type="submit" value="Finalizar Compra" class="btn btn-success botao-finalizar" />
+        </div>
+    </div>
+    <!-- FIM DA PARTE DE ENVIO DO PRODUTO-->
+    <!--REVIEW ORDER-->
+    <div class="div-carrinho">
+        <div class="seu-carrinho-editar">
+            <p style="opacity: 0.5;">Seu Carrinho (@this.Context.Session.GetString("qtdItens"))</p><div>
+                <small>
+                    <a style="font-weight: 700; text-decoration: underline;" href="/Carrinho">Editar Carrinho</a>
+                </small>
+            </div>
+        </div>
+        <div>
+
+            @*//div q aparece os produtos*@
+            <div style="display: flex; flex-wrap: wrap;" class="form-group">
+                @foreach (var item in ViewBag.ProdutosCheckout)
+                {
+                    <div class="col-sm-3 col-xs-3">
+                        <img src="~/produtos_img/@item.Produto.ImagePath"
+                             alt="Produto"
+                             width="140"
+                             style="align-self: center;"
+                             asp-append-version="true" />
+                    </div>
+
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="col-xs-12 text-uppercase"><p style="font-weight: 500">@item.Produto.Titulo</p></div>
+                        <div class="col-xs-12"><small>Quantidade:<span> 1</span></small></div>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-3 text-right">
+                        <h6><span>R$</span>@item.Produto.Valor</h6>
+                    </div>
+                    <div class="form-group"><hr /></div>
+                }
+            </div>
+            @*//termina aqui a div q aparece os produtos*@
+
+            <div class="form-group">
+                <div style="font-weight: 300;" class="col-xs-12">
+                    Subtotal
+                    <div style="font-weight: 700;" class="pull-right"><span>R$</span><span>@this.Context.Session.GetString("valorTotal")</span></div>
+                </div>
+                <div style="padding-top: 5px; font-weight: 300;" class="col-xs-12">
+                    Frete
+                    <div class="pull-right"><span>Irá ser calculado no próximo passo</span></div>
+                </div>
+            </div>
+            <div class="form-group"><hr /></div>
+
+            <div class="form-group">
+                <div style="font-weight: bold; font-size: 30px;" class="col-xs-12">
+                    Total
+                    <div class="pull-right"><span>R$@this.Context.Session.GetString("valorTotal")</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--REVIEW ORDER END-->
+</div>
+<style>
+    .div-tudo {
+        flex: 1;
+        display: flex;
+        width: 120%;
+        border: 1px solid;
+        border-color: #d4d4d4;
+        background: #fff;
+    }
+
+    .div-infos-usuario {
+        width: 90%;
+    }
+
+    .div-carrinho {
+        background: #EDEEF1;
+        width: 80%;
+        padding: 15px;
+    }
+
+    .caminhos {
+        font-weight: 500;
+        color: #0A08C8;
+        padding-top: 10px;
+        padding-left: 15px;
+    }
+
+    .caminhos1 {
+        font-weight: 500;
+        color: #000;
+        opacity: 0.5;
+        padding-top: 10px;
+        padding-left: 15px;
+    }
+
+    .input-infos {
+        width: 68%;
+        margin-left: 3%;
+    }
+
+    .seu-carrinho-editar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .botao-finalizar {
+        margin-left: 200px;
+    }
+
+    .label-input {
+        font-weight: 100;
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+</style>

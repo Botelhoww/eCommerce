@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
+﻿using eCommerce_Inefavel.Helpers;
 using eCommerce_Inefavel.Models;
-using eCommerce_Inefavel.ViewModels;
 using eCommerce_Inefavel.Models.Contexto;
+using eCommerce_Inefavel.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IO;
-using eCommerce_Inefavel.Helpers;
+using System.Linq;
 
 namespace eCommerce_Inefavel.Controllers
 {
@@ -41,8 +38,7 @@ namespace eCommerce_Inefavel.Controllers
         [Route("/Lista-Produtos")]
         public IActionResult ListaDeProdutos()
         {
-            var listaProdutos = _contexto.Produtos.ToList()
-                .Where(x => x.Ativo == true);
+            var listaProdutos = _contexto.Produtos.ToList();
 
             return View(listaProdutos);
         }
